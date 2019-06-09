@@ -1,0 +1,39 @@
+<!doctype html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+
+      <h1>Lab 1</h1>
+
+      <p>Search</p>
+      <form action="/list" method="post">
+        <div>
+          <label for="limit">Limit:</label>
+          <input type="number" id="limit" name="limit" value="10"/>
+        </div>
+        <div>
+          <label for="label">Category:</label>
+          <select name="category">
+            <option value="WOMEN">Women</option>
+            <option value="CRIME">Crime</option>
+          </select>
+        </div>
+        <div>
+        <button type="submit">GO</button>
+      </form>
+
+      <p>Get by Id</p>
+      <form action="/detail">
+        <div>
+          <label for="id">ID:</label>
+          <input type="number" id="id" name="id" value="257271"/>
+        </div>
+        <button type="submit">GO</button>
+      </form>
+    </body>
+</html>

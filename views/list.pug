@@ -1,0 +1,24 @@
+a(href='/') Home
+
+if(data.length > 0)
+  table
+    thead
+      th id
+      th Category
+      th Headline
+      th Authors
+      th Link
+      th Short Description
+      th Date
+    each val in data
+      tr
+        td=val.id
+        td=val.category
+        td=val.headline
+        td=val.authors
+        td=val.link
+        td=val.short_description
+        td=val.date
+
+if(data.length == 0)
+  p No data
