@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+var train = require('./train');
+
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'pug')
@@ -18,7 +20,6 @@ app.get('/', function (req, res) {
 
 // Pedido de POST para a raíz
 app.post('/list', function (req, res) {
-  console.log(req.body);
   corpus.getCorpus(req.body.limit, req.body.category, function(response) {
     res.render('list', {data: response});
   });
@@ -34,5 +35,8 @@ var server = app.listen(8081, function () {
 var host = server.address().address === "::" ? "localhost" : server.address().address;
 
 var port = server.address().port;
-console.log("NewsEST listening at http://%s:%s", host, port);
+  console.log("NewsEST listening at http://%s:%s", host, port);
+  train.getTrainingSet(function(response) {
+    train.process(response[56].short_description);
+  });
 });
