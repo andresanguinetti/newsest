@@ -6,6 +6,11 @@ var tokenization = require('./preprocessing/tokenization');
 var stemming = require('./preprocessing/stemming');
 var counting = require('./preprocessing/counting');
 
+var bagOfWords = require('./features/bagOfWords');
+
+let bofArr1 = [];
+let bofArr2 = [];
+
 exports.getTrainingSet = function(result) {
   var connection = mysql.createConnection(connectionOptions);
 
@@ -26,35 +31,46 @@ exports.process = function(text) {
 
   text = text.toLowerCase();
 
-  console.log("REMOVING STOP WORDS");
+  //console.log("REMOVING STOP WORDS");
   var sw = stopwords.removeStopwords(text);
-  console.log(sw);
+  //console.log(sw);
 
-  console.log("CLEANING TEXT");
+  //console.log("CLEANING TEXT");
   var cleanText = tokenization.clean(sw.join(" "));
-  console.log(cleanText);
+  //console.log(cleanText);
 
-  console.log("NORMALIZING TEXT");
+  //console.log("NORMALIZING TEXT");
   var stem = stemming.normalize(cleanText);
-  console.log(stem);
 
-  console.log("NGRAM1");
-  var nGram1 = tokenization.ngram(stem, 1);
-  console.log(nGram1);
+  return stem;
+  //console.log(stem);
 
-  console.log("NGRAM2");
-  var nGram2 = tokenization.ngram(stem, 2);
-  console.log(nGram2);
+  //console.log("NGRAM1");
+  //var nGram1 = tokenization.ngram(stem, 1);
+  //console.log(nGram1);
 
-  console.log("NUMBER OF WORDS");
-  var words = counting.words(stem.join(" "));
-  console.log(words);
+  //console.log("NGRAM2");
+  //var nGram2 = tokenization.ngram(stem, 2);
+  //console.log(nGram2);
 
-  console.log("NUMBER OF CHARACTERS");
-  var characters = counting.characters(stem.join(" "));
-  console.log(characters);
+  //console.log("NUMBER OF WORDS");
+  //var words = counting.words(stem.join(" "));
+  //console.log(words);
 
-  console.log("TERM FREQUENCY");
-  var tf = counting.termFrequency(["nope"], stem);
-  console.log(tf);
+  //console.log("NUMBER OF CHARACTERS");
+  //var characters = counting.characters(stem.join(" "));
+  //console.log(characters);
+
+  //console.log("TERM FREQUENCY: "+ counting.termFrequency(["victim"], stem));
+
+  //console.log("BAG OF WORDS");
+  //bagOfWords.addUniqueTerms(bofArr1, nGram1);
+  //console.log(bofArr1);
+
+  //bagOfWords.addUniqueTerms(bofArr2, nGram2);
+  //console.log(bofArr2);
+
+  //console.log("EXISTS: " + counting.exists(["victim"], stem));
+
+  //console.log("NUMBER OF OCCURRENCES: " + counting.numberOfOccurrences(["victim"], stem));
 }
