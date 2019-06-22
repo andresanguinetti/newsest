@@ -45,16 +45,17 @@ exports.process = function(resultSet) {
     docObj.bagOfWords1Gram.sort();
     docObj.bagOfWords2Gram.sort();
     */
+    processThirdStage(docObj.bagOfWords1Gram, docObj.bagOfWords2Gram, docObj);
 
     docObj.documents.forEach(function(d, idx, arr) {
-        processThirdStage(docObj.bagOfWords1Gram, docObj.bagOfWords2Gram, d, docObj);
+        processFourthStage(docObj.bagOfWords1Gram, docObj.bagOfWords2Gram, d, docObj);
     });
-
-    processFourthStage(docObj);
 
     processFifthStage(docObj);
 
     processSixthStage(docObj);
+
+    processSeventhStage(docObj);
 
     resolve(docObj);
 
@@ -91,23 +92,49 @@ processSecondStage = function(documents, ngram) {
 
 }
 
+processThirdStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, docObj) {
+  let allTerms = [];
+
+  docObj.documents.forEach(function(doc, idx, arr) {
+    allTerms.push(doc.cleanText);
+  });
+
+  docObj['bagOfWords1GramIdfVector'] = bagOfWords.idfVector(bagOfWordsArr1Gram, allTerms);
+  docObj['bagOfWords2GramIdfVector'] = bagOfWords.idfVector(bagOfWordsArr2Gram, allTerms);
+
+}
+
 /**
  * Creates the binary vector, nº of occurrences vector, tf,
  * idf and tf_idf vectors for a document, given its bag of words
  **/
-processThirdStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, d, docObj) {
+processFourthStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, d, docObj) {
 
   d.binaryVector1Gram = bagOfWords.binaryVector(bagOfWordsArr1Gram, d.cleanText.split(" "));
   d.nOccurrencesVector1Gram = bagOfWords.numberOfOccurrencesVector(bagOfWordsArr1Gram, d.cleanText.split(" "));
   d.tfVector1Gram = bagOfWords.tfVector(bagOfWordsArr1Gram, d.cleanText.split(" "));
-  d.idfVector1Gram = bagOfWords.idfVector(bagOfWordsArr1Gram, d.cleanText.split(" "));
-  d.tfidfVector1Gram = bagOfWords.tfidfVector(bagOfWordsArr1Gram, d.cleanText.split(" "));
+
+  //IDF 1 GRAM & TF_IDF
+  d.idfVector1Gram = [];
+  d.tfidfVector1Gram = [];
+  d.binaryVector1Gram.forEach(function(v, idx, arr) {
+    d.idfVector1Gram[idx] = v * docObj.bagOfWords1GramIdfVector[idx];
+    d.tfidfVector1Gram[idx] = d.tfVector1Gram[idx] * d.idfVector1Gram[idx];
+  });
+
+  console.log(d.idfVector1Gram);
 
   d.binaryVector2Gram = bagOfWords.binaryVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
   d.nOccurrencesVector2Gram = bagOfWords.numberOfOccurrencesVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
   d.tfVector2Gram = bagOfWords.tfVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
-  d.idfVector2Gram = bagOfWords.idfVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
-  d.tfidfVector2Gram = bagOfWords.tfidfVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
+
+  //IDF 2 GRAM & TF_IDF
+  d.idfVector2Gram = [];
+  d.tfidfVector2Gram = [];
+  d.binaryVector2Gram.forEach(function(v, idx, arr) {
+    d.idfVector2Gram[idx] = v * docObj.bagOfWords2GramIdfVector[idx];
+    d.tfidfVector2Gram[idx] = d.tfVector2Gram[idx] * d.idfVector2Gram[idx];
+  });
 
   docObj.binaryVector1GramArr.push(d.binaryVector1Gram);
   docObj.nOccurrencesVector1GramArr.push(d.nOccurrencesVector1Gram);
@@ -124,7 +151,7 @@ processThirdStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, d, docObj) 
 /**
  *  Creates all the required sum vectors
  **/
-processFourthStage = function(docObj) {
+processFifthStage = function(docObj) {
 
   docObj['sumBinaryVector1GramArr'] = utils.sumVector(docObj.binaryVector1GramArr);
   docObj['sumNOccurrencesVector1GramArr'] = utils.sumVector(docObj.nOccurrencesVector1GramArr);
@@ -139,12 +166,12 @@ processFourthStage = function(docObj) {
 
 }
 
-processFifthStage = function(docObj) {
+processSixthStage = function(docObj) {
   docObj.termTfidfVector1GramArr = bagOfWords.mapping(docObj.bagOfWords1Gram, docObj.sumTfidfVector1GramArr);
   docObj.termTfidfVector2GramArr = bagOfWords.mapping(docObj.bagOfWords2Gram, docObj.sumTfidfVector2GramArr);
 }
 
-processSixthStage = function(docObj) {
+processSeventhStage = function(docObj) {
   docObj['topTfidfVector1GramArr'] = utils.top(docObj.termTfidfVector1GramArr, 20);
   docObj['topTfidfVector2GramArr'] = utils.top(docObj.termTfidfVector2GramArr, 20);
 }
