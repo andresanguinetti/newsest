@@ -1,0 +1,210 @@
+doctype html
+meta(name="viewport" content="width=device-width, initial-scale=1")
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+html(lang='en')
+  include includes/head.pug
+  include includes/nav.pug
+
+  script(src="/js/preprocessing.js")
+
+  body
+    div(class="container" style="margin-top: 20px")
+      h4 Preprocessing
+      hr
+
+    div(class="container")
+      p 'WOMEN' data
+
+      p BAG OF WORDS 1 GRAM
+      h6= womenData.bagOfWords1Gram
+      p BAG OF WORDS 2 GRAM
+      h6= womenData.bagOfWords2Gram
+
+      each val in womenData.documents
+        hr
+        span Clean text
+        h6=val.cleanText
+
+        span Binary Vector 1 Gram
+        h6=val.binaryVector1Gram
+
+        span N Occurrences Vector 1 Gram
+        h6=val.nOccurrencesVector1Gram
+
+        span TF Vector 1 Gram
+        h6=val.tfVector1Gram
+
+        span IDF Vector 1 Gram
+        h6=val.idfVector1Gram
+
+        span TF_IDF Vector 1 Gram
+        h6=val.tfidfVector1Gram
+
+        span Binary Vector 2 Gram
+        h6=val.binaryVector2Gram
+
+        span N Occurrences Vector 2 Gram
+        h6=val.nOccurrencesVector2Gram
+
+        span TF Vector 2 Gram
+        h6=val.tfVector2Gram
+
+        span IDF Vector 2 Gram
+        h6=val.idfVector2Gram
+
+        span TF_IDF Vector 2 Gram
+        h6=val.tfidfVector2Gram
+
+      span SUM sumBinaryVector1GramArr
+      h6=womenData.sumBinaryVector1GramArr
+      span SUM sumNOccurrencesVector1GramArr
+      h6=womenData.sumNOccurrencesVector1GramArr
+      span SUM sumTfVector1GramArr
+      h6=womenData.sumTfVector1GramArr
+      span SUM sumIdfVector1GramArr
+      h6=womenData.sumIdfVector1GramArr
+      span SUM sumTfidfVector1GramArr
+      h6=womenData.sumTfidfVector1GramArr
+      span SUM sumBinaryVector2GramArr
+      h6=womenData.sumBinaryVector2GramArr
+      span SUM sumNOccurrencesVector2GramArr
+      h6=womenData.sumNOccurrencesVector2GramArr
+      span SUM sumTfVector2GramArr
+      h6=womenData.sumTfVector2GramArr
+      span SUM sumIdfVector2GramArr
+      h6=womenData.sumIdfVector2GramArr
+      span SUM sumTfidfVector2GramArr
+      h6=womenData.sumTfidfVector2GramArr
+
+
+      span TERM termTfidfVector1GramArr
+      each val in womenData.termTfidfVector1GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+      span TERM termTfidfVector2GramArr
+      each val in womenData.termTfidfVector2GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+      span TOP topTfidfVector1GramArr
+      each val in womenData.topTfidfVector1GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+      span TOP topTfidfVector2GramArr
+      each val in womenData.topTfidfVector2GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+    hr
+    div(class="container")
+      p 'CRIME' data
+
+      p BAG OF WORDS 1 GRAM
+      h6= crimeData.bagOfWords1Gram
+      p BAG OF WORDS 2 GRAM
+      h6= crimeData.bagOfWords2Gram
+
+      each val in crimeData.documents
+        hr
+        span Clean text
+        h6=val.cleanText
+
+        span Binary Vector 1 Gram
+        h6=val.binaryVector1Gram
+
+        span N Occurrences Vector 1 Gram
+        h6=val.nOccurrencesVector1Gram
+
+        span TF Vector 1 Gram
+        h6=val.tfVector1Gram
+
+        span IDF Vector 1 Gram
+        h6=val.idfVector1Gram
+
+        span TF_IDF Vector 1 Gram
+        h6=val.tfidfVector1Gram
+
+        span Binary Vector 2 Gram
+        h6=val.binaryVector2Gram
+
+        span N Occurrences Vector 2 Gram
+        h6=val.nOccurrencesVector2Gram
+
+        span TF Vector 2 Gram
+        h6=val.tfVector2Gram
+
+        span IDF Vector 2 Gram
+        h6=val.idfVector2Gram
+
+        span TF_IDF Vector 2 Gram
+        h6=val.tfidfVector2Gram
+
+      span SUM sumBinaryVector1GramArr
+      h6=crimeData.sumBinaryVector1GramArr
+      span SUM sumNOccurrencesVector1GramArr
+      h6=crimeData.sumNOccurrencesVector1GramArr
+      span SUM sumTfVector1GramArr
+      h6=crimeData.sumTfVector1GramArr
+      span SUM sumIdfVector1GramArr
+      h6=crimeData.sumIdfVector1GramArr
+      span SUM sumTfidfVector1GramArr
+      h6=crimeData.sumTfidfVector1GramArr
+      span SUM sumBinaryVector2GramArr
+      h6=crimeData.sumBinaryVector2GramArr
+      span SUM sumNOccurrencesVector2GramArr
+      h6=crimeData.sumNOccurrencesVector2GramArr
+      span SUM sumTfVector2GramArr
+      h6=crimeData.sumTfVector2GramArr
+      span SUM sumIdfVector2GramArr
+      h6=crimeData.sumIdfVector2GramArr
+      span SUM sumTfidfVector2GramArr
+      h6=crimeData.sumTfidfVector2GramArr
+
+
+      span TERM termTfidfVector1GramArr
+      each val in crimeData.termTfidfVector1GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+      span TERM termTfidfVector2GramArr
+      each val in crimeData.termTfidfVector2GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+      span TOP topTfidfVector1GramArr
+      each val in crimeData.topTfidfVector1GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+      span TOP topTfidfVector2GramArr
+      each val in crimeData.topTfidfVector2GramArr
+        div.row
+          div.col-sm-6
+            span=val.name
+          div.col-sm-6
+            span=val.value
+
+    include includes/footer.pug

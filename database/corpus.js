@@ -1,6 +1,23 @@
 var connectionOptions = require('./config').getConnectionOptions();
 var mysql = require('mysql');
 
+exports.getAllCorpus = function(result) {
+  console.log("********");
+  var connection = mysql.createConnection(connectionOptions);
+
+  connection.connect();
+
+  connection.query("SELECT * from corpus", function (err, rows, fields) {
+    if (err) {
+      result(err);
+    } else {
+      result(rows);
+    }
+  });
+
+  connection.end();
+}
+
 exports.getCorpus = function(limit, category, result) {
   var connection = mysql.createConnection(connectionOptions);
 

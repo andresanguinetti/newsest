@@ -1,23 +1,49 @@
+const http = require('http');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var router = express.Router();
 
-var train = require('./train');
+var trainingSetRoutes = require('./routes/TrainingSetRoutes');
+var preprocessingRoutes = require('./routes/PreprocessingRoutes');
+var testRoutes = require('./routes/TestRoutes');
+
+//var corpus = require('./database/corpus');
+//var train = require('./train');
+
+app.set('view engine', 'pug');
 
 app.use(express.static(__dirname + '/public'));
-
-app.set('view engine', 'pug')
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-var corpus = require('./database/corpus');
+app.use('/', router);
 
 // Pedido de GET para a raíz
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
+router.get('/', function(req, res) {
+  res.render('index');
 });
 
+router.use('/training-set', trainingSetRoutes);
+router.use('/preprocessing', preprocessingRoutes);
+router.use('/test', testRoutes);
+
+/*
+app.get('/corpus', function (req, res) {
+
+});
+
+app.get('/preprocessing', function (req, res) {
+  res.render('preprocessing');
+});
+
+app.get('/test', function (req, res) {
+  res.render('test');
+});
+*/
+
+/*
 // Pedido de POST para a raíz
 app.post('/list', function (req, res) {
   corpus.getCorpus(req.body.limit, req.body.category, function(response) {
@@ -30,12 +56,22 @@ app.get('/detail', function(req, res) {
     res.render('detail', {data: response[0]});
   });
 });
+*/
 
-var server = app.listen(8081, function () {
-var host = server.address().address === "::" ? "localhost" : server.address().address;
+httpServer = http.createServer(app);
 
-var port = server.address().port;
-  console.log("NewsEST listening at http://%s:%s", host, port);
+let httpPort = process.env.PORT || 8081;
+
+httpServer.listen(httpPort, () => {
+ console.log('NewsEST Server running on port ' + httpPort);
+});
+
+//var server = app.listen(8081, function () {
+//var host = server.address().address === "::" ? "localhost" : server.address().address;
+
+//var port = server.address().port;
+  //console.log("NewsEST listening at http://%s:%s", host, port);
+  /*
   let textArr = [];
   train.getTrainingSet(function(response) {
     response.forEach(function(r, idx, arr) {
@@ -72,6 +108,14 @@ var port = server.address().port;
     console.log("TF_IDF VECTOR");
     let tfidfVector = bagOfWords.tfidfVector(bagOfWordsArr, textArr[1].split(" "));
     console.log(JSON.stringify(tfidfVector));
+      });
+*/
+
+
+
+
+
+
     /*let counting = require('./preprocessing/counting');
 
     let term = ["husband"];
@@ -81,6 +125,6 @@ var port = server.address().port;
     console.log("TF: " + tf);
     console.log("IDF: " + idf);
     console.log("TF_IDF: " + tfidf);*/
-  });
 
-});
+
+//});

@@ -70,3 +70,17 @@ module.exports.tfidfVector = function(bagOfWordsArr, termsArr) {
 
   return result;
 }
+
+var Term = require('../features/Term');
+module.exports.mapping = function (arrayBagOfWords, arrayAdd) {
+    var aResult = [];
+    for(var i = 0; i<arrayBagOfWords.length; i++)
+    {
+        var name = arrayBagOfWords[i];
+        var value = arrayAdd[i];
+
+        var myTerm = new Term(name, value);
+        aResult[i] = myTerm;
+    }
+    return aResult;
+};
