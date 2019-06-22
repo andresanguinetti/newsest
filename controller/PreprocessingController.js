@@ -122,8 +122,6 @@ processFourthStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, d, docObj)
     d.tfidfVector1Gram[idx] = d.tfVector1Gram[idx] * d.idfVector1Gram[idx];
   });
 
-  console.log(d.idfVector1Gram);
-
   d.binaryVector2Gram = bagOfWords.binaryVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
   d.nOccurrencesVector2Gram = bagOfWords.numberOfOccurrencesVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
   d.tfVector2Gram = bagOfWords.tfVector(bagOfWordsArr2Gram, d.cleanText.split(" "));
