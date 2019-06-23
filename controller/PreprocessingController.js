@@ -62,6 +62,26 @@ exports.process = function(resultSet) {
   });
 }
 
+exports.classVector = function(docObj) {
+  return new Promise(resolve => {
+    let categoryClass = {
+      category: docObj.documents[0].category,
+      bagofwords: docObj.bagOfWords1Gram,
+      idf: docObj.bagOfWords1GramIdfVector,
+      tfidf: [],
+    };
+
+    // CALCULATE TF_IDF
+    // TODO check if document mean?!
+    docObj.bagOfWords1GramIdfVector.forEach(function(d, idx, arr) {
+      categoryClass.tfidf.push((docObj.sumTfVector1GramArr[idx] / docObj.documents.length) * docObj.bagOfWords1GramIdfVector[idx]);
+    });
+
+    resolve(categoryClass);
+
+  });
+}
+
 /**
  * Return the text properly normalized and stemmed
  */

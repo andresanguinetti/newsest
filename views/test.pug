@@ -5,8 +5,48 @@ html(lang='en')
   include includes/nav.pug
 
   body
-    div(class="container" style="margin-top: 20px")
-      h4 Test
-      hr
+    div.container-fluid
+      div.row
+        div.col-sm-6
+          h3= 'Class Vector: ' + classVectors[0].category
+          div(style="max-height: 250px; overflow: auto")
+            table(class="table table-bordered table-sm table-hover")
+              thead.thead-dark
+                th(style="position: sticky; top: 0") Term
+                th(style="position: sticky; top: 0") IDF
+                th(style="position: sticky; top: 0") TF_IDF
+              tbody
+                each val, index in classVectors[0].bagofwords
+                  tr
+                    td=val
+                    td=classVectors[0].idf[index]
+                    td=classVectors[0].tfidf[index]
+
+          h3= 'Class Vector: ' + classVectors[1].category
+          div(style="max-height: 250px; overflow: auto; margin-top: 20px;")
+            table(class="table table-bordered table-sm table-hover")
+              thead.thead-dark
+                th(style="position: sticky; top: 0") Term
+                th(style="position: sticky; top: 0") IDF
+                th(style="position: sticky; top: 0") TF_IDF
+              tbody
+                each val, index in classVectors[1].bagofwords
+                  tr
+                    td=val
+                    td=classVectors[1].idf[index]
+                    td=classVectors[1].tfidf[index]
+
+        div.col-sm-6
+          h3 Test yourself
+          form(action="/test/" method="post")
+            .form-group
+              input#textInput.form-control(type='text' name='text', placeholder='Enter text to process')
+            button.btn.btn-primary(type='submit') Submit
+
+          if result
+            span= 'RESULT: ' + result
+            p= 'Similarity for category women: ' + cosWomen
+            p= 'Similarity for category crime: ' + cosCrime
+
 
     include includes/footer.pug
