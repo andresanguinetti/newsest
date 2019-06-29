@@ -2,7 +2,6 @@ var connectionOptions = require('./config').getConnectionOptions();
 var mysql = require('mysql');
 
 exports.getAllCorpus = function(result) {
-  console.log("********");
   var connection = mysql.createConnection(connectionOptions);
 
   connection.connect();
