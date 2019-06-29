@@ -43,10 +43,13 @@ html(lang='en')
               input#textInput.form-control(type='text' name='text', placeholder='Enter text to process')
             button.btn.btn-primary(type='submit') Submit
 
-          if result
+          if result && (cosWomen != cosCrime)
             span= 'RESULT: ' + result
             p= 'Similarity for category women: ' + cosWomen
             p= 'Similarity for category crime: ' + cosCrime
+
+          if (cosWomen != null && cosWomen != null) && (cosWomen == cosCrime)
+            span= 'Cannot classify. Perhaps training set is missing the terms?'
 
 
     include includes/footer.pug

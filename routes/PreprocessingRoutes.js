@@ -4,6 +4,7 @@ var router = express.Router();
 var trainingSetCtrl = require('../controller/TrainingSetController');
 var preprocessingCtrl = require('../controller/PreprocessingController');
 
+// Renders the Preprocessing page
 router.get('/', function(req, res) {
 
   let data = {};

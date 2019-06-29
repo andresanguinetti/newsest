@@ -1,3 +1,6 @@
+/**
+ * Receives an array of vectors and returns one vector with the sum of all vectors, for each position
+ */
 module.exports.sumVector = function (vectorArr) {
     var aResult = new Array(vectorArr[0].length).fill(0);
 
@@ -11,6 +14,9 @@ module.exports.sumVector = function (vectorArr) {
     return aResult;
 };
 
+/**
+ * Given an array of terms returns the top n terms
+ */
 module.exports.top = function (arrayTerms, n) {
 
   arrayTerms = arrayTerms.sort(function(a,b) {

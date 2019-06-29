@@ -5,8 +5,21 @@ html(lang='en')
   include includes/nav.pug
 
   body
-    div(class="container" style="margin-top: 20px")
-      h4 Home
-      hr
+    div.container
+      div.row
+        div.col-sm-12
+          div
+            h4 Training Set
+            span Lists all the current training set records
+          hr
+          div
+            h4 Preprocessing
+            span Performs all the inherent preprocessing for each item of the training set, showing some metrics
+          hr
+          div
+            h4 Test
+            span Allows the end-user to input a text and checks whether the classifier matches the news headline, or not
+
+
 
     include includes/footer.pug

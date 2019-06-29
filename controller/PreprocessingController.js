@@ -72,7 +72,6 @@ exports.classVector = function(docObj) {
     };
 
     // CALCULATE TF_IDF
-    // TODO check if document mean?!
     docObj.bagOfWords1GramIdfVector.forEach(function(d, idx, arr) {
       categoryClass.tfidf.push((docObj.sumTfVector1GramArr[idx] / docObj.documents.length) * docObj.bagOfWords1GramIdfVector[idx]);
     });
@@ -99,7 +98,7 @@ processFirstStage = function(text) {
 
 /**
  * Creates the bag of words
- **/
+ */
 processSecondStage = function(documents, ngram) {
 
   let bagOfWordsArr = [];
@@ -112,6 +111,9 @@ processSecondStage = function(documents, ngram) {
 
 }
 
+/**
+ * Returns the bagOfWords 1Gram and 2Gram IDF vector
+ */
 processThirdStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, docObj) {
   let allTerms = [];
 
@@ -127,7 +129,7 @@ processThirdStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, docObj) {
 /**
  * Creates the binary vector, nº of occurrences vector, tf,
  * idf and tf_idf vectors for a document, given its bag of words
- **/
+ */
 processFourthStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, d, docObj) {
 
   d.binaryVector1Gram = bagOfWords.binaryVector(bagOfWordsArr1Gram, d.cleanText.split(" "));
@@ -168,7 +170,7 @@ processFourthStage = function(bagOfWordsArr1Gram, bagOfWordsArr2Gram, d, docObj)
 
 /**
  *  Creates all the required sum vectors
- **/
+ */
 processFifthStage = function(docObj) {
 
   docObj['sumBinaryVector1GramArr'] = utils.sumVector(docObj.binaryVector1GramArr);
@@ -184,11 +186,17 @@ processFifthStage = function(docObj) {
 
 }
 
+/**
+ * Creates the TF-IDF vector of the terms, both 1Gram and 2Gram
+ */
 processSixthStage = function(docObj) {
   docObj.termTfidfVector1GramArr = bagOfWords.mapping(docObj.bagOfWords1Gram, docObj.sumTfidfVector1GramArr);
   docObj.termTfidfVector2GramArr = bagOfWords.mapping(docObj.bagOfWords2Gram, docObj.sumTfidfVector2GramArr);
 }
 
+/**
+ * Creates the top TF-IDF vector of the terms, both 1Gram and 2Gram
+ */
 processSeventhStage = function(docObj) {
   docObj['topTfidfVector1GramArr'] = utils.top(docObj.termTfidfVector1GramArr, 20);
   docObj['topTfidfVector2GramArr'] = utils.top(docObj.termTfidfVector2GramArr, 20);

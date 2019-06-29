@@ -1,5 +1,9 @@
 let counting = require('../preprocessing/counting');
+var Term = require('../features/Term');
 
+/**
+ * Adds all the unique terms to an array, removing duplicates
+ */
 module.exports.addUniqueTerms = function(resultArr, testArr) {
 
   testArr.forEach(function(line, idx, arr) {
@@ -11,6 +15,9 @@ module.exports.addUniqueTerms = function(resultArr, testArr) {
   return resultArr;
 }
 
+/**
+ * Returns the binary vector of an array, given both bag of words array and terms array
+ */
 module.exports.binaryVector = function(bagOfWordsArr, termsArr) {
   let result = [];
 
@@ -30,7 +37,9 @@ module.exports.binaryVector = function(bagOfWordsArr, termsArr) {
   return result;
 }
 
-
+/**
+ * Returns the number of occurences vector of an array, given both bag of words array and terms array
+ */
 module.exports.numberOfOccurrencesVector = function(bagOfWordsArr, termsArr) {
   let result = [];
 
@@ -41,6 +50,9 @@ module.exports.numberOfOccurrencesVector = function(bagOfWordsArr, termsArr) {
   return result;
 }
 
+/**
+ * Returns the TF vector of an array, given both bag of words array and terms array
+ */
 module.exports.tfVector = function(bagOfWordsArr, termsArr) {
   let result = [];
 
@@ -51,6 +63,9 @@ module.exports.tfVector = function(bagOfWordsArr, termsArr) {
   return result;
 }
 
+/**
+ * Returns the IDF vector of an array, given both bag of words array and terms array
+ */
 module.exports.idfVector = function(bagOfWordsArr, termsArr) {
   let result = [];
 
@@ -61,6 +76,9 @@ module.exports.idfVector = function(bagOfWordsArr, termsArr) {
   return result;
 }
 
+/**
+ * Returns the TF-IDF vector of an array, given both bag of words array and terms array
+ */
 module.exports.tfidfVector = function(bagOfWordsArr, termsArr) {
   let result = [];
 
@@ -71,7 +89,10 @@ module.exports.tfidfVector = function(bagOfWordsArr, termsArr) {
   return result;
 }
 
-var Term = require('../features/Term');
+/**
+ * Maps the two given arrays, returning a Term array where the name is the
+ * bagOfWords index value, and the value is the array vector value
+ */
 module.exports.mapping = function (arrayBagOfWords, arrayAdd) {
     var aResult = [];
     for(var i = 0; i<arrayBagOfWords.length; i++)

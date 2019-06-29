@@ -3,9 +3,9 @@ var router = express.Router();
 
 var trainingSetCtrl = require('../controller/TrainingSetController');
 var preprocessingCtrl = require('../controller/PreprocessingController');
-var testCtrl = require('../controller/TestController');
 var classifier = require('../features/classifier');
 
+// Renders the Test page
 router.get('/', function(req, res) {
 
   let data = {};
@@ -17,6 +17,7 @@ router.get('/', function(req, res) {
 
 });
 
+// Renders the Test page, with the respective classifier applied
 router.post('/', function(req, res) {
 
   let data = {};
@@ -31,6 +32,9 @@ router.post('/', function(req, res) {
 
       let cosWomen = classifier.calculateCosineSimilarity(vectorsArr.tfidfVectorWomen, classVectors[0].tfidf);
       let cosCrime = classifier.calculateCosineSimilarity(vectorsArr.tfidfVectorCrime, classVectors[1].tfidf);
+
+      cosWomen = isNaN(cosWomen) ? 0 : cosWomen;
+      cosCrime = isNaN(cosCrime) ? 0 : cosCrime;
 
       data.cosWomen = cosWomen;
       data.cosCrime = cosCrime;

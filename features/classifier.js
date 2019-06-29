@@ -6,6 +6,9 @@ var stemming = require('../preprocessing/stemming');
 
 var bagOfWords = require('../features/bagOfWords');
 
+/**
+ * Processes the training set and returns the respective class vectors of a given text
+ */
 exports.cossineSimilarity = function(text, classVectors) {
   // Process text
   text = text.toLowerCase();
@@ -44,6 +47,9 @@ exports.cossineSimilarity = function(text, classVectors) {
   return result;
 }
 
+/**
+ * Returns  the cossineSimilarity of two given vectors
+ */
 exports.calculateCosineSimilarity = function(vector1, vector2) {
 
   let sumA = 0;

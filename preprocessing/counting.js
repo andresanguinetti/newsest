@@ -1,13 +1,24 @@
 var tokenization = require('./tokenization');
 
+/**
+ * Returns the number of words of a given text
+ */
 module.exports.words = function(text) {
   return text.split(" ").length;
 }
 
+/**
+ * Returns the number of characters of a given text
+ */
 module.exports.characters = function(text) {
   return text.length;
 }
 
+/**
+ * Returns the term frequency of a term, in a given text.
+ * Splits the text, and, for every word, if it matches the term,
+ * increments a counter, dividing then by the n-gram length
+ */
 module.exports.termFrequency = function(term, text) {
 
   let termStr = JSON.stringify(term);
@@ -24,6 +35,9 @@ module.exports.termFrequency = function(term, text) {
   return count / nGram.length;
 }
 
+/**
+ * Returns whether a given term exists in a given text
+ */
 module.exports.exists = function(term, text) {
   let termStr = JSON.stringify(term);
   let nGram = tokenization.ngram(text, term.length);
@@ -39,6 +53,11 @@ module.exports.exists = function(term, text) {
 
 }
 
+/**
+ * Returns the number of occurrences a term, in a given text.
+ * Splits the text, and, for every word, if it matches the term,
+ * increments a counter
+ */
 module.exports.numberOfOccurrences = function(term, text) {
   let termStr = JSON.stringify(term);
   let nGram = tokenization.ngram(text, term.length);
@@ -52,6 +71,9 @@ module.exports.numberOfOccurrences = function(term, text) {
   return count;
 }
 
+/**
+ * Returns the inverse document frequency of a term, in an array of texts
+ */
 module.exports.idf = function(term, textArr) {
   let termStr = JSON.stringify(term);
 
@@ -72,6 +94,10 @@ module.exports.idf = function(term, textArr) {
   return isFinite(result) ? result : 0;
 }
 
+/**
+ * Returns the calculation between the term frequency and the inverse document
+ * frequency of a document
+ */
 module.exports.tfidf = function(tf, idf) {
   return tf * idf;
 }
